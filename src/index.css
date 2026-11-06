@@ -1,0 +1,127 @@
+
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  background: #f7f2ff;
+}
+
+/* =========================================
+   HOMEPAGE BACKGROUND
+   Hero and Footer excluded
+========================================= */
+
+.homepage-main > section:not(#home):not(#hero) {
+  background-color: #f7f2ff !important;
+}
+
+/* =========================================
+   CONSISTENT VERTICAL SECTION SPACING
+   Hero and Monitor Story excluded
+========================================= */
+
+.homepage-main > section:not(#home):not(#hero):not(#brand-story-monitor) {
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+
+/* =========================================
+   TABLET VERTICAL SPACING
+========================================= */
+
+@media (max-width: 1024px) {
+  .homepage-main > section:not(#home):not(#hero):not(#brand-story-monitor) {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+  }
+}
+
+/* =========================================
+   MOBILE VERTICAL SPACING
+========================================= */
+
+@media (max-width: 640px) {
+  .homepage-main > section:not(#home):not(#hero):not(#brand-story-monitor) {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+}
+
+/* =========================================
+   REDUCE HORIZONTAL SIDE SPACING
+   Hero and Footer unchanged
+========================================= */
+
+.homepage-main > section:not(#home):not(#hero) > div[class*="max-w-"] {
+  max-width: 1500px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* =========================================
+   MOBILE SIDE SPACING
+========================================= */
+
+@media (max-width: 640px) {
+  .homepage-main > section:not(#home):not(#hero) > div[class*="max-w-"] {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* =========================================
+   SERVICES SECTION TOP SPACING FIX
+========================================= */
+
+@media (min-width: 768px) {
+  .homepage-main > #services {
+    padding-top: 40px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .homepage-main > #services {
+    padding-top: 48px !important;
+  }
+}
+
+/* =========================================
+   MONITOR STORY → SERVICES GAP FIX
+========================================= */
+
+@media (min-width: 768px) {
+  .homepage-main > #brand-story-monitor {
+    padding-bottom: 40px !important;
+  }
+
+  .homepage-main > #services {
+    padding-top: 24px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .homepage-main > #brand-story-monitor {
+    padding-bottom: 32px !important;
+  }
+
+  .homepage-main > #services {
+    padding-top: 32px !important;
+  }
+}
+/* Fix extra blank space around Services */
+.homepage-main > #services {
+  padding-top: 48px !important;
+  padding-bottom: 48px !important;
+}
+
+@media (max-width: 640px) {
+  .homepage-main > #services {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+}
