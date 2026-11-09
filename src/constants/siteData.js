@@ -60,16 +60,161 @@ export const faqs = [
   { q: 'Which industries do you have case studies in?', a: 'Real Estate (Godrej, DLF, M3M, Elan), FinTech (SME PAISA), Healthcare, Education and D2C E-commerce.' },
 ];
 
+
 export const testimonials = [
-  { quote: 'Brandtisers Media transformed our online presence. Their team delivered incredible real estate lead volume and boosted our sales pipeline.', name: 'Ravi Kumar', role: 'Managing Director', company: 'Commercial & Residential Developments', highlight: '+180% Lead Volume' },
-  { quote: 'Extremely satisfied with the web development and performance marketing. They built a lightning-fast, high-converting portal for our broker network.', name: 'Priya Sharma', role: 'Head of Marketing', company: 'Premier Brokerage Network', highlight: 'Top 3 Google Rankings' },
+  {
+    platform: 'google',
+    name: 'Ravi Kumar',
+    role: 'Managing Director',
+    company: 'Commercial & Residential Developments',
+    quote: 'Brandtisers Media transformed our online presence. Their team delivered incredible real estate lead volume and boosted our sales pipeline.',
+    highlight: '+180% Lead Volume',
+    date: '2025-12-12',
+    avatar: '',
+  },
+  {
+    platform: 'facebook',
+    name: 'Priya Sharma',
+    role: 'Head of Marketing',
+    company: 'Premier Brokerage Network',
+    quote: 'Extremely satisfied with the web development and performance marketing. They built a lightning-fast, high-converting portal for our broker network.',
+    highlight: 'Top 3 Google Rankings',
+    date: '2025-10-08',
+    avatar: '',
+  },
+  {
+    platform: 'instagram',
+    name: 'Aarav Mehta',
+    role: 'Brand Manager',
+    company: 'Lifestyle Brand',
+    quote: 'Amazing creatives and social media campaigns. Our brand engagement has improved significantly.',
+    highlight: 'Amazing Creativity',
+    date: '2025-11-15',
+    avatar: '',
+    image: '',
+  },
+  {
+    platform: 'whatsapp',
+    name: 'Neha Gupta',
+    role: 'Business Owner',
+    company: 'Retail Business',
+    quote: 'The team was very responsive and helped us generate quality leads through digital campaigns.',
+    highlight: 'Great Support',
+    date: '2025-11-20',
+    avatar: '',
+    reply: 'Thank you for your valuable feedback!',
+  },
+  {
+    platform: 'linkedin',
+    name: 'Ankit Verma',
+    role: 'Founder',
+    company: 'Technology Company',
+    quote: 'A professional team with excellent digital marketing and web development expertise. Highly recommended.',
+    highlight: 'Professional Partnership',
+    date: '2025-12-01',
+    avatar: '',
+  },
+  {
+    platform: 'youtube',
+    name: 'Karan Singh',
+    role: 'Business Owner',
+    company: 'E-commerce',
+    quote: 'Great work on our website and marketing campaigns. The overall experience has been excellent.',
+    highlight: 'Excellent Work',
+    date: '2025-12-05',
+    avatar: '',
+  },
+  {
+    platform: 'x',
+    name: 'Simran Kapoor',
+    role: 'Marketing Professional',
+    company: 'Digital Business',
+    quote: 'Creative ideas, responsive communication and a great understanding of digital growth.',
+    highlight: 'Creative Team',
+    date: '2025-12-10',
+    avatar: '',
+  },
+  {
+    platform: 'trustpilot',
+    name: 'Rahul Malhotra',
+    role: 'Director',
+    company: 'Business Solutions',
+    quote: 'A reliable digital growth partner. Great communication and a professional approach.',
+    highlight: 'Excellent Service',
+    date: '2025-12-15',
+    avatar: '',
+  },
 ];
+
+
 
 export const industries = [
   { name: 'Real Estate & Builders', note: 'Luxury, Commercial & Broker Funnels', emoji: '🏢' },
   { name: 'Finance & SME Loans', note: 'FinTech, SME Paisa & Wealth', emoji: '💳' },
   { name: 'Healthcare & Wellness', note: 'Hospitals, Clinics & Booking Funnels', emoji: '🏥' },
   { name: 'Lifestyle & D2C Stores', note: 'Catalog Ads & Reorders', emoji: '🛍️' },
+  
+  {
+    name: 'Education & EdTech',
+    emoji: '🎓',
+    note: 'Schools, Universities & Online Learning',
+  },
+  {
+    name: 'Travel & Hospitality',
+    emoji: '✈️',
+    note: 'Hotels, Resorts & Travel Agencies',
+  },
+  {
+    name: 'Food & Beverage',
+    emoji: '🍽️',
+    note: 'Restaurants, Cafes & Food Brands',
+  },
+  {
+    name: 'Automotive & Mobility',
+    emoji: '🚗',
+    note: 'Automobiles, EVs & Car Dealers',
+  },
+  {
+    name: 'Fashion & Apparel',
+    emoji: '👗',
+    note: 'Clothing, Footwear & Fashion Labels',
+  },
+  {
+    name: 'Beauty & Personal Care',
+    emoji: '💄',
+    note: 'Skincare, Cosmetics & Salon Brands',
+  },
+  {
+    name: 'Home & Interior',
+    emoji: '🏡',
+    note: 'Furniture, Decor & Interior Design',
+  },
+  {
+    name: 'Technology & SaaS',
+    emoji: '💻',
+    note: 'Software, IT & Tech Startups',
+  },
+  {
+    name: 'Manufacturing & Industrial',
+    emoji: '🏭',
+    note: 'Factories, Machinery & B2B Brands',
+  },
+  {
+    name: 'Logistics & Supply Chain',
+    emoji: '🚚',
+    note: 'Transport, Warehousing & Delivery',
+  },
+  {
+    name: 'Fitness & Sports',
+    emoji: '🏋️',
+    note: 'Gyms, Fitness & Sports Brands',
+  },
+  {
+    name: 'Events & Entertainment',
+    emoji: '🎬',
+    note: 'Events, Artists & Entertainment',
+  },
+
 ];
 
 export const companyStorySlides = [

@@ -1,6 +1,4 @@
-
 import React, { useEffect, useRef, useState } from "react";
-
 import {
   motion,
   AnimatePresence,
@@ -9,7 +7,6 @@ import {
   useTransform,
   useSpring,
 } from "motion/react";
-
 import {
   ArrowUpRight,
   ArrowRight,
@@ -24,23 +21,30 @@ import {
   Check,
   Globe2,
   MousePointer2,
-  MoveUpRight,
   Camera,
   Search,
   Code2,
-  Megaphone,
-  BarChart3,
   Layers3,
   Zap,
-  Quote,
-  ChevronLeft,
-  ChevronRight,
   ArrowDown,
-  CircleCheck,
+  Building2,
+  MapPin,
+  Clock,
+  Compass,
+  Radio,
+  Flame,
+  Award,
+  CheckCircle2,
+  Gauge,
+  Cpu,
+  Layers,
+  Sliders,
+  Power,
+  Activity,
 } from "lucide-react";
 
 /* =========================================
-   CONFIGURATION
+   CONFIGURATION & MEDIA
 ========================================= */
 
 const PURPLE = "#7138F5";
@@ -50,37 +54,22 @@ const EASE = [0.22, 1, 0.36, 1];
 const MEDIA = {
   heroMain:
     "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1400",
-
-  heroSmall:
-    "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=900",
-
   storyOne:
     "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1200",
-
-  storyTwo:
-    "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=1000",
-
-  studio:
-    "https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=1200",
-
   galleryOne:
     "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=1200",
-
   galleryTwo:
     "https://images.pexels.com/photos/3184317/pexels-photo-3184317.jpeg?auto=compress&cs=tinysrgb&w=1200",
-
   galleryThree:
     "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1200",
-
   galleryFour:
     "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200",
-
   galleryFive:
     "https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=1200",
 };
 
 /* =========================================
-   DATA
+   DATA FOR INTACT SECTIONS
 ========================================= */
 
 const VALUES = [
@@ -165,17 +154,6 @@ const PROCESS = [
   },
 ];
 
-const SERVICES = [
-  { name: "SEO & GMB", icon: Search },
-  { name: "Social Media", icon: Camera },
-  { name: "Meta Ads", icon: Target },
-  { name: "Google Ads", icon: MousePointer2 },
-  { name: "Web Development", icon: Code2 },
-  { name: "Brand Strategy", icon: Layers3 },
-  { name: "Creative Campaigns", icon: Lightbulb },
-  { name: "Lead Generation", icon: TrendingUp },
-];
-
 const GALLERY = [
   {
     src: MEDIA.galleryOne,
@@ -205,711 +183,592 @@ const GALLERY = [
 ];
 
 /* =========================================
-   REUSABLE COMPONENTS
+   REUSABLE PRIMITIVES
 ========================================= */
 
-function Reveal({
-  children,
-  className = "",
-  delay = 0,
-  y = 40,
-}) {
+function Reveal({ children, className = "", delay = 0, y = 24 }) {
   const reduce = useReducedMotion();
-
   return (
     <motion.div
       className={className}
-      initial={
-        reduce
-          ? false
-          : { opacity: 0, y }
-      }
+      initial={reduce ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{
-        duration: 0.8,
-        delay,
-        ease: EASE,
-      }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.6, delay, ease: EASE }}
     >
       {children}
     </motion.div>
   );
 }
 
-function SectionTag({ children, light = false }) {
+function SectionEyebrow({ children, invert = false }) {
   return (
-    <span
-      className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.14em] ${
-        light
-          ? "border-white/25 bg-white/10 text-white"
-          : "border-[#E8DEFF] bg-[#F8F4FF] text-[#7138F5]"
-      }`}
-    >
-      <Sparkles size={13} />
-      {children}
-    </span>
-  );
-}
-
-function SectionTitle({
-  tag,
-  title,
-  accent,
-  description,
-  center = false,
-}) {
-  return (
-    <Reveal
-      className={`mb-12 lg:mb-16 ${
-        center
-          ? "mx-auto max-w-3xl text-center"
-          : "max-w-2xl"
-      }`}
-    >
-      <SectionTag>{tag}</SectionTag>
-
-      <h2 className="mt-6 text-[34px] font-black leading-[1.12] tracking-[-0.045em] text-[#101535] sm:text-[44px] lg:text-[54px]">
-        {title}{" "}
-        {accent && (
-          <span className="bg-gradient-to-r from-[#7138F5] via-[#965BFF] to-[#C184FF] bg-clip-text text-transparent">
-            {accent}
-          </span>
-        )}
-      </h2>
-
-      {description && (
-        <p
-          className={`mt-5 text-sm leading-8 text-[#626B85] sm:text-base ${
-            center ? "mx-auto max-w-2xl" : ""
-          }`}
-        >
-          {description}
-        </p>
-      )}
-    </Reveal>
-  );
-}
-
-function Photo({
-  src,
-  alt,
-  className = "",
-  imageClassName = "",
-}) {
-  return (
-    <div
-      className={`group relative overflow-hidden bg-[#EEE8F8] ${className}`}
-    >
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.07] ${imageClassName}`}
+    <div className="flex items-center gap-2">
+      <span
+        className={`h-1.5 w-1.5 rounded-full ${
+          invert ? "bg-[#FF9F1C]" : "bg-[#7138F5]"
+        }`}
       />
+      <span
+        className={`font-mono text-[11px] font-black uppercase tracking-[0.2em] ${
+          invert ? "text-[#D8B4FE]" : "text-[#7138F5]"
+        }`}
+      >
+        {children}
+      </span>
     </div>
   );
 }
 
-function GradientButton({
-  children,
-  href,
-  light = false,
-}) {
-  return (
-    <motion.a
-      href={href}
-      whileHover={{ y: -3, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`group inline-flex items-center justify-center gap-3 rounded-full px-7 py-4 text-sm font-extrabold shadow-[0_12px_30px_rgba(113,56,245,0.20)] transition-colors ${
-        light
-          ? "bg-white text-[#7138F5] hover:bg-[#F5EFFF]"
-          : "bg-[#7138F5] text-white hover:bg-[#5F29E4]"
-      }`}
-    >
-      {children}
+/* ============================================================
+   ANIMATED GROWTH ENGINE: BESPOKE VECTOR MACHINERY (Not AI)
+============================================================ */
 
-      <ArrowUpRight
-        size={18}
-        className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-      />
-    </motion.a>
-  );
-}
-
-/* =========================================
-   ABOUT HERO
-========================================= */
-
-function AboutHero() {
-  const reduce = useReducedMotion();
-  const container = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end start"],
-  });
-
-  const imageY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, 90]
-  );
-
-  const imageRotate = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, 5]
-  );
+function GrowthMachinery({ hyperDrive }) {
+  const speedMultiplier = hyperDrive ? 0.35 : 1;
 
   return (
-    <section
-      ref={container}
-      className="relative isolate overflow-hidden bg-[#FBFAFF] px-5 pb-20 pt-16 sm:pt-20 lg:pb-28 lg:pt-24"
-    >
-      <div className="pointer-events-none absolute -left-52 top-10 h-[600px] w-[600px] rounded-full bg-[#7138F5]/[0.07] blur-[110px]" />
+    <div className="relative mx-auto flex h-[420px] w-full max-w-[540px] items-center justify-center select-none sm:h-[480px]">
+      {/* Background Blueprint Grid Lines */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-35 stroke-[#e0d3f8]"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <pattern id="machineryGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" strokeWidth="0.8" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#machineryGrid)" />
+      </svg>
 
-      <div className="pointer-events-none absolute -right-48 top-[-150px] h-[600px] w-[600px] rounded-full bg-[#B89AFF]/[0.13] blur-[120px]" />
+      {/* Energy Flow Circuits (Animated SVG Conduits) */}
+      <svg
+        viewBox="0 0 500 500"
+        className="absolute inset-0 h-full w-full overflow-visible"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="laserBeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#7138F5" />
+            <stop offset="50%" stopColor="#A855F7" />
+            <stop offset="100%" stopColor="#FF9F1C" />
+          </linearGradient>
+        </defs>
 
-      <div
-        className="pointer-events-none absolute inset-0 opacity-35"
-        style={{
-          backgroundImage:
-            "radial-gradient(#BDA4F4 0.7px, transparent 0.7px)",
-          backgroundSize: "27px 27px",
-          maskImage:
-            "linear-gradient(to bottom, black, transparent 95%)",
-        }}
-      />
+        {/* Conduit to Top-Left: Creative Satellite */}
+        <path
+          d="M 250 250 L 140 130"
+          fill="none"
+          stroke="#d8c5fa"
+          strokeWidth="2"
+          strokeDasharray="4 6"
+        />
+        <motion.circle
+          cx="250"
+          cy="250"
+          r="4"
+          fill="#7138F5"
+          animate={{ cx: [250, 140], cy: [250, 130] }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.8 * speedMultiplier,
+            ease: "linear",
+          }}
+        />
 
-      <div className="relative mx-auto max-w-7xl">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.03fr_0.97fr] lg:gap-12 xl:gap-20">
+        {/* Conduit to Top-Right: Funnel Satellite */}
+        <path
+          d="M 250 250 L 370 120"
+          fill="none"
+          stroke="#d8c5fa"
+          strokeWidth="2"
+          strokeDasharray="4 6"
+        />
+        <motion.circle
+          cx="250"
+          cy="250"
+          r="4"
+          fill="#FF9F1C"
+          animate={{ cx: [250, 370], cy: [250, 120] }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.5 * speedMultiplier,
+            ease: "linear",
+          }}
+        />
 
-          {/* LEFT CONTENT */}
-          <div className="relative z-20">
-            <Reveal>
-              <SectionTag>Inside Brandtisers Media</SectionTag>
-            </Reveal>
+        {/* Conduit to Bottom-Center: Revenue Gauge Satellite */}
+        <path
+          d="M 250 250 L 250 380"
+          fill="none"
+          stroke="#d8c5fa"
+          strokeWidth="2"
+          strokeDasharray="4 6"
+        />
+        <motion.circle
+          cx="250"
+          cy="250"
+          r="4"
+          fill="#00e5bd"
+          animate={{ cy: [250, 380] }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.4 * speedMultiplier,
+            ease: "linear",
+          }}
+        />
+      </svg>
 
-            <Reveal delay={0.1}>
-              <h1 className="mt-7 text-[46px] font-black leading-[1.06] tracking-[-0.055em] text-[#101535] sm:text-[64px] lg:text-[65px] xl:text-[76px]">
-                We're Not
-                <br />
-                Just Another
-                <br />
+      {/* CENTRAL REACTOR CORE: Dual Reverse-Rotating Gears */}
+      <div className="relative z-10 flex h-48 w-48 items-center justify-center sm:h-56 sm:w-56">
+        {/* Outer Ring Spoke Gear */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            repeat: Infinity,
+            duration: 20 * speedMultiplier,
+            ease: "linear",
+          }}
+          className="absolute inset-0 rounded-full border-2 border-dashed border-[#7138F5] shadow-[0_0_30px_rgba(113,56,245,0.18)]"
+        />
 
-                <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-[#7138F5] via-[#9356FA] to-[#E18B71] bg-clip-text text-transparent">
-                    Agency.
-                  </span>
+        {/* Reverse Middle Orbital Compass */}
+        <motion.div
+          animate={{ rotate: -360 }}
+          transition={{
+            repeat: Infinity,
+            duration: 12 * speedMultiplier,
+            ease: "linear",
+          }}
+          className="absolute inset-3 rounded-full border border-[#FF9F1C]/60"
+        >
+          {/* Orbital Satellite Nodes */}
+          <span className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full border border-white bg-[#7138F5]" />
+          <span className="absolute -bottom-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full border border-white bg-[#FF9F1C]" />
+        </motion.div>
 
-                  <motion.svg
-                    viewBox="0 0 320 24"
-                    className="absolute -bottom-3 left-0 w-full"
-                    preserveAspectRatio="none"
-                    aria-hidden="true"
-                  >
-                    <motion.path
-                      d="M4 15 Q160 -2 316 12"
-                      fill="none"
-                      stroke="#F5A623"
-                      strokeWidth="7"
-                      strokeLinecap="round"
-                      initial={
-                        reduce
-                          ? false
-                          : { pathLength: 0 }
-                      }
-                      animate={{ pathLength: 1 }}
-                      transition={{
-                        duration: 1.1,
-                        delay: 0.7,
-                        ease: EASE,
-                      }}
-                    />
-                  </motion.svg>
-                </span>
-              </h1>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <h2 className="mt-9 text-xl font-bold tracking-tight text-[#101535] sm:text-2xl">
-                We're the team behind your
-                <span className="text-[#7138F5]">
-                  {" "}next big move.
-                </span>
-              </h2>
-
-              <p className="mt-5 max-w-[550px] text-sm leading-8 text-[#626B85] sm:text-base">
-                We blend strategy, creativity and technology
-                to help ambitious brands stand out, connect
-                with the right audience and grow with purpose.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.3}>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <GradientButton href="/contact">
-                  Let's Work Together
-                </GradientButton>
-
-                <a
-                  href="#our-story"
-                  className="group inline-flex items-center gap-2 text-sm font-extrabold text-[#101535] transition-colors hover:text-[#7138F5]"
-                >
-                  Discover Our Story
-
-                  <ArrowDown
-                    size={16}
-                    className="transition-transform group-hover:translate-y-1"
-                  />
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.4}>
-              <div className="mt-12 flex flex-wrap items-center gap-5 border-t border-[#E8E1F4] pt-7 sm:gap-8">
-                <div>
-                  <p className="text-2xl font-black text-[#101535] sm:text-3xl">
-                    15+
-                  </p>
-                  <p className="mt-1 text-xs font-semibold text-[#626B85]">
-                    Industry Sectors
-                  </p>
-                </div>
-
-                <div className="h-10 w-px bg-[#E8E1F4]" />
-
-                <div>
-                  <p className="text-2xl font-black text-[#101535] sm:text-3xl">
-                    360°
-                  </p>
-                  <p className="mt-1 text-xs font-semibold text-[#626B85]">
-                    Digital Approach
-                  </p>
-                </div>
-
-                <div className="h-10 w-px bg-[#E8E1F4]" />
-
-                <div>
-                  <p className="text-2xl font-black text-[#101535] sm:text-3xl">
-                    One
-                  </p>
-                  <p className="mt-1 text-xs font-semibold text-[#626B85]">
-                    Growth Partner
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* RIGHT IMAGE COMPOSITION */}
-          <div className="relative mx-auto w-full max-w-[590px] pb-8 pt-5 sm:px-5 lg:pt-0">
-            <motion.div
-              style={
-                reduce
-                  ? undefined
-                  : {
-                      y: imageY,
-                      rotate: imageRotate,
-                    }
-              }
-              initial={
-                reduce
-                  ? false
-                  : { opacity: 0, scale: 0.92 }
-              }
-              animate={{
-                opacity: 1,
-                scale: 1,
-              }}
-              transition={{
-                duration: 1,
-                delay: 0.2,
-                ease: EASE,
-              }}
-              className="relative"
-            >
-              <div className="absolute -right-4 -top-4 h-[90%] w-[90%] rounded-[42px] border-2 border-[#D9C8FF] sm:-right-7 sm:-top-7" />
-
-              <div className="absolute -bottom-5 -left-5 h-[80%] w-[80%] rounded-[42px] bg-[#EDE4FF] sm:-bottom-8 sm:-left-8" />
-
-              <Photo
-                src={MEDIA.heroMain}
-                alt="Creative digital marketing team collaborating"
-                className="relative z-10 h-[400px] rounded-[30px] shadow-[0_35px_90px_rgba(49,22,110,0.16)] sm:h-[540px] lg:h-[560px]"
-              />
-
-              <div className="pointer-events-none absolute inset-0 z-10 rounded-[30px] bg-gradient-to-t from-[#101535]/45 via-transparent to-transparent" />
-
-              <div className="absolute bottom-7 left-7 z-20 text-white">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/75">
-                  Brandtisers Media
-                </p>
-
-                <p className="mt-2 text-xl font-black sm:text-2xl">
-                  Ideas that move brands.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* FLOATING CREATIVE CARD */}
-            <motion.div
-              initial={
-                reduce
-                  ? false
-                  : {
-                      opacity: 0,
-                      x: -35,
-                      rotate: -12,
-                    }
-              }
-              animate={{
-                opacity: 1,
-                x: 0,
-                rotate: -8,
-              }}
-              transition={{
-                duration: 0.8,
-                delay: 0.65,
-              }}
-              className="absolute -left-2 top-[15%] z-30 hidden w-[155px] rounded-2xl border-[5px] border-white bg-white shadow-[0_20px_50px_rgba(20,15,70,0.18)] sm:block lg:-left-10"
-            >
-              <img
-                src={MEDIA.heroSmall}
-                alt="Creative teamwork"
-                className="h-[110px] w-full rounded-xl object-cover"
-              />
-
-              <p className="px-2 py-3 text-center text-[11px] font-black text-[#101535]">
-                Think. Create. Grow.
-              </p>
-            </motion.div>
-
-            {/* FLOATING LABEL */}
-            <motion.div
-              animate={
-                reduce
-                  ? {}
-                  : {
-                      y: [0, -12, 0],
-                    }
-              }
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute -bottom-3 right-0 z-30 flex items-center gap-3 rounded-2xl border border-[#E8DEFA] bg-white px-5 py-4 shadow-[0_18px_45px_rgba(35,20,100,0.13)] sm:-right-5 sm:bottom-7"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F0E8FF] text-[#7138F5]">
-                <TrendingUp size={25} />
-              </div>
-
-              <div>
-                <p className="text-sm font-black text-[#101535]">
-                  Growth Mindset
-                </p>
-
-                <p className="mt-1 text-xs text-[#626B85]">
-                  Strategy meets creativity
-                </p>
-              </div>
-            </motion.div>
-
-            {/* FLOATING SPARKLE */}
-            <motion.div
-              animate={
-                reduce
-                  ? {}
-                  : {
-                      rotate: [0, 18, -10, 0],
-                      scale: [1, 1.15, 1],
-                    }
-              }
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-              }}
-              className="absolute -right-4 top-5 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-[#F5B63D] text-white shadow-lg"
-            >
-              <Sparkles size={23} />
-            </motion.div>
-          </div>
+        {/* Inner Power Dynamo */}
+        <div className="relative flex h-32 w-32 items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-[#7138F5] via-[#8B5CF6] to-[#A855F7] text-white shadow-[0_12px_40px_rgba(113,56,245,0.4)] sm:h-36 sm:w-36">
+          <motion.div
+            animate={{
+              scale: hyperDrive ? [1, 1.15, 1] : [1, 1.05, 1],
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: hyperDrive ? 1.2 : 3,
+              ease: "easeInOut",
+            }}
+            className="flex flex-col items-center text-center"
+          >
+            <Cpu size={32} className="text-[#FFD166]" />
+            <span className="mt-1 font-mono text-[9px] font-black uppercase tracking-widest">
+              REACTOR CORE
+            </span>
+            <span className="font-mono text-[11px] font-bold text-white/90">
+              {hyperDrive ? "100% THRUST" : "60% NOMINAL"}
+            </span>
+          </motion.div>
         </div>
       </div>
-    </section>
-  );
-}
 
-/* =========================================
-   MARQUEE
-========================================= */
-
-function CreativeMarquee() {
-  const reduce = useReducedMotion();
-
-  const words = [
-    "STRATEGY",
-    "CREATIVITY",
-    "PERFORMANCE",
-    "INNOVATION",
-    "GROWTH",
-    "DIGITAL",
-  ];
-
-  return (
-    <div className="overflow-hidden border-y border-[#EDE6F8] bg-white py-5">
+      {/* SATELLITE MODULE 01: CREATIVE PULSE (Top-Left) */}
       <motion.div
-        className="flex w-max items-center gap-10"
-        animate={
-          reduce
-            ? {}
-            : { x: ["0%", "-50%"] }
-        }
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        animate={{ y: [0, -6, 0] }}
+        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+        className="absolute left-2 top-4 z-20 w-36 rounded-2xl border border-[#e8ddf7] bg-white/95 p-3 shadow-[0_8px_24px_rgba(20,20,50,0.08)] backdrop-blur-md sm:left-6 sm:w-40 sm:p-3.5"
       >
-        {[...words, ...words, ...words, ...words].map(
-          (word, i) => (
-            <div
-              key={`${word}-${i}`}
-              className="flex shrink-0 items-center gap-10"
-            >
-              <span className="text-sm font-black tracking-[0.16em] text-[#333455] sm:text-base">
-                {word}
-              </span>
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[9px] font-black uppercase text-[#7138F5]">
+            01 / CREATIVE
+          </span>
+          <Camera size={13} className="text-[#7138F5]" />
+        </div>
+        <p className="mt-1 text-xs font-black text-[#101535]">Motion Lab</p>
+        {/* Real-time Frequency Waveform */}
+        <div className="mt-2.5 flex items-end gap-1 h-3.5">
+          {[0.4, 0.9, 0.3, 1, 0.6, 0.8, 0.4].map((h, i) => (
+            <motion.span
+              key={i}
+              animate={{ scaleY: hyperDrive ? [0.2, h, 0.2] : [0.3, h * 0.7, 0.3] }}
+              transition={{
+                repeat: Infinity,
+                duration: (0.5 + i * 0.1) * speedMultiplier,
+                ease: "easeInOut",
+              }}
+              className="flex-1 origin-bottom rounded-full bg-[#7138F5]"
+              style={{ height: "100%" }}
+            />
+          ))}
+        </div>
+      </motion.div>
 
-              <Sparkles
-                size={17}
-                className="text-[#7138F5]"
-              />
-            </div>
-          )
-        )}
+      {/* SATELLITE MODULE 02: HIGH-INTENT FUNNEL (Top-Right) */}
+      <motion.div
+        animate={{ y: [0, 6, 0] }}
+        transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+        className="absolute right-2 top-2 z-20 w-36 rounded-2xl border border-[#e8ddf7] bg-white/95 p-3 shadow-[0_8px_24px_rgba(20,20,50,0.08)] backdrop-blur-md sm:right-6 sm:w-40 sm:p-3.5"
+      >
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[9px] font-black uppercase text-[#FF9F1C]">
+            02 / FUNNEL
+          </span>
+          <Target size={13} className="text-[#FF9F1C]" />
+        </div>
+        <p className="mt-1 text-xs font-black text-[#101535]">CRO Matrix</p>
+        {/* Tiered Drop Gauge */}
+        <div className="mt-2 space-y-1">
+          <div className="h-1.5 w-full rounded-full bg-[#FF9F1C]/20 overflow-hidden">
+            <div className="h-full w-full bg-[#FF9F1C]" />
+          </div>
+          <div className="h-1.5 w-[75%] rounded-full bg-[#FF9F1C]/20 overflow-hidden">
+            <div className="h-full w-full bg-[#FF9F1C]" />
+          </div>
+          <div className="h-1.5 w-[45%] rounded-full bg-[#7138F5]/30 overflow-hidden">
+            <div className="h-full w-full bg-[#7138F5]" />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* SATELLITE MODULE 03: VELOCITY GAUGE (Bottom-Center) */}
+      <motion.div
+        animate={{ y: [0, -5, 0] }}
+        transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+        className="absolute bottom-2 left-1/2 z-20 -translate-x-1/2 w-48 rounded-2xl border border-[#e8ddf7] bg-white/95 p-3 shadow-[0_8px_24px_rgba(20,20,50,0.08)] backdrop-blur-md sm:bottom-4 sm:w-52 sm:p-3.5"
+      >
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[9px] font-black uppercase text-emerald-600">
+            03 / REVENUE VELOCITY
+          </span>
+          <Gauge size={13} className="text-emerald-600" />
+        </div>
+        <div className="mt-2 flex items-center justify-between">
+          <span className="font-mono text-lg font-black text-[#101535]">
+            {hyperDrive ? "4.6x" : "3.8x"} ROAS
+          </span>
+          <span className="rounded-full bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+            {hyperDrive ? "MAX OVERDRIVE" : "VERIFIED"}
+          </span>
+        </div>
       </motion.div>
     </div>
   );
 }
 
-/* =========================================
-   OUR STORY
-========================================= */
+/* ============================================================
+   1. HERO SECTION (Custom Animated Machinery Blueprint)
+============================================================ */
+
+function AboutHero() {
+  const [hyperDrive, setHyperDrive] = useState(false);
+  const [liveClock, setLiveClock] = useState("");
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    const updateTime = () => {
+      const d = new Date();
+      setLiveClock(
+        d.toLocaleTimeString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        })
+      );
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section className="relative isolate overflow-hidden bg-white pb-16 pt-10 sm:pb-24 sm:pt-14 lg:pb-28 lg:pt-16">
+      {/* Precision Corner Crosshair Grid */}
+      <div className="pointer-events-none absolute inset-x-6 top-8 flex justify-between font-mono text-[10px] text-[#A898C8]/60 select-none sm:inset-x-10">
+        <span>+ 28.6139° N, 77.2090° E</span>
+        <span>DELHI NCR LAB // OPS 01</span>
+      </div>
+
+      <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        
+        {/* LIVE TELEMETRY HEADER */}
+        <Reveal>
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[#e8ddf7] pb-4 pt-4">
+            <div className="flex items-center gap-2">
+              <span className="flex h-2.5 w-2.5 items-center justify-center rounded-full bg-emerald-500">
+                <span className="h-1.5 w-1.5 rounded-full bg-white animate-ping" />
+              </span>
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#101535]">
+                Independent Growth & Creative Foundry
+              </span>
+            </div>
+
+            <div className="flex items-center gap-4 font-mono text-xs font-semibold text-[#626B85]">
+              <span className="flex items-center gap-1.5">
+                <Clock size={13} className="text-[#7138F5]" />
+                {liveClock || "12:00:00 PM IST"}
+              </span>
+              <span>•</span>
+              <span className="text-emerald-600 font-bold">
+                Direct Partner Sprints
+              </span>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* HERO MAIN STAGE: EDITORIAL LEFT + MACHINERY BLUEPRINT RIGHT */}
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+          
+          {/* LEFT CONTENT */}
+          <div className="lg:col-span-6">
+            <Reveal delay={0.06}>
+              <SectionEyebrow>No Clichés. Pure Velocity.</SectionEyebrow>
+
+              <h1 className="mt-4 text-[38px] font-black leading-[1.04] tracking-[-0.045em] text-[#101535] sm:text-[54px] md:text-[62px] lg:text-[70px]">
+                We don't guess. We{" "}
+                <span className="bg-gradient-to-r from-[#7138F5] via-[#A855F7] to-[#F46B68] bg-clip-text text-transparent">
+                  engineer market dominance.
+                </span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-[#515b7c] sm:text-lg">
+                Brandtisers Media is not an agency of passive slide decks. We are a
+                growth apparatus combining high-velocity video production, headless
+                web engineering, and capital-protected ad buying.
+              </p>
+            </Reveal>
+
+            {/* INTERACTIVE ENGINE MODE TOGGLE */}
+            <Reveal delay={0.18}>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => setHyperDrive(!hyperDrive)}
+                  className={`group inline-flex items-center gap-2.5 rounded-full border px-5 py-3 text-xs font-black uppercase tracking-wider transition-all sm:text-sm ${
+                    hyperDrive
+                      ? "border-[#FF9F1C] bg-[#FF9F1C] text-white shadow-[0_4px_20px_rgba(255,159,28,0.4)]"
+                      : "border-[#7138F5] bg-[#7138F5] text-white shadow-[0_4px_20px_rgba(113,56,245,0.35)] hover:bg-[#5f22e6]"
+                  }`}
+                >
+                  <Power size={15} className={hyperDrive ? "animate-pulse" : ""} />
+                  <span>
+                    {hyperDrive ? "⚡ Hyperdrive: 100% Output" : "Ignite Engine Boost"}
+                  </span>
+                </button>
+
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#ded5ec] bg-white px-5 py-3 text-xs font-bold text-[#101535] shadow-xs transition hover:border-[#7138F5] hover:text-[#7138F5] sm:text-sm"
+                >
+                  <span>Book Partner Audit</span>
+                  <ArrowUpRight size={15} />
+                </a>
+              </div>
+            </Reveal>
+
+            {/* OPERATIONAL TELEMETRY BADGES */}
+            <Reveal delay={0.24}>
+              <div className="mt-10 grid grid-cols-3 gap-3 border-t border-[#e8ddf7] pt-5 font-mono">
+                <div>
+                  <p className="text-xs font-bold uppercase text-[#7c86a2]">Sprint Cycle</p>
+                  <p className="mt-1 text-sm font-black text-[#101535]">14 Days</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase text-[#7c86a2]">Senior Leads</p>
+                  <p className="mt-1 text-sm font-black text-[#7138F5]">100% Direct</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase text-[#7c86a2]">Attributed ROAS</p>
+                  <p className="mt-1 text-sm font-black text-[#101535]">3.8x Avg</p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* RIGHT: BESPOKE ANIMATED GROWTH APPARATUS */}
+          <div className="lg:col-span-6">
+            <Reveal delay={0.15}>
+              <div className="relative rounded-[32px] border-2 border-[#e8ddf7] bg-gradient-to-b from-[#FAF6FF] to-white p-4 shadow-[0_20px_60px_rgba(113,56,245,0.08)] sm:p-6">
+                {/* Engine Mode Pill */}
+                <div className="flex items-center justify-between border-b border-[#e8ddf7] pb-3 text-xs font-bold text-[#626B85]">
+                  <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase text-[#7138F5]">
+                    <Activity size={13} />
+                    Apparatus State: {hyperDrive ? "TURBO OVERCLOCK" : "CALIBRATED"}
+                  </span>
+                  <span className="font-mono text-[10px] text-[#A898C8]">
+                    FIG. 01 // GROWTH RIG
+                  </span>
+                </div>
+
+                {/* THE MACHINERY ILLUSTRATION */}
+                <GrowthMachinery hyperDrive={hyperDrive} />
+              </div>
+            </Reveal>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   2. CREATIVE CREED MARQUEE
+============================================================ */
+
+function CreativeMarquee() {
+  const reduce = useReducedMotion();
+  const manifesto = [
+    "HIGH-INTENT FUNNELS",
+    "ZERO VANITY METRICS",
+    "VERIFIED PIPELINE",
+    "FULL-THROTTLE ROI",
+    "CONVERSION ARCHITECTURE",
+    "AUDACIOUS CREATIVE",
+  ];
+
+  return (
+    <div className="overflow-hidden border-y border-[#e8ddf7] bg-[#FAF6FF] py-4">
+      <motion.div
+        className="flex w-max items-center gap-10"
+        animate={reduce ? {} : { x: ["0%", "-50%"] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+      >
+        {[...manifesto, ...manifesto, ...manifesto].map((item, i) => (
+          <div key={`${item}-${i}`} className="flex shrink-0 items-center gap-10">
+            <span className="font-mono text-xs font-black tracking-[0.2em] text-[#101535]">
+              {item}
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#7138F5]" />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ============================================================
+   3. EDITORIAL STORY SECTION
+============================================================ */
 
 function OurStory() {
   return (
-    <section
-      id="our-story"
-      className="relative overflow-hidden bg-white px-5 py-24 lg:py-32"
-    >
-      <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2 lg:gap-20">
+    <section id="our-story" className="relative overflow-hidden bg-white py-24 lg:py-32">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <Reveal>
+              <SectionEyebrow>Origin & Philosophy</SectionEyebrow>
+              <h2 className="mt-5 text-3xl font-black leading-[1.08] tracking-[-0.04em] text-[#101535] sm:text-4xl lg:text-5xl">
+                Born out of frustration with vanity metrics and empty monthly retainers.
+              </h2>
+            </Reveal>
 
-        {/* LEFT IMAGES */}
-        <div className="relative pb-8">
-          <Reveal>
-            <div className="grid grid-cols-[1.15fr_0.85fr] items-end gap-4">
-              <Photo
-                src={MEDIA.storyOne}
-                alt="Marketing team collaboration"
-                className="h-[380px] rounded-[28px] sm:h-[500px]"
-              />
+            <Reveal delay={0.1}>
+              <blockquote className="my-8 rounded-2xl border-l-4 border-[#7138F5] bg-[#FAF6FF] p-6 text-base italic leading-relaxed text-[#101535] sm:text-lg">
+                “Marketing shouldn't feel like burning money in a dark room hoping
+                someone notices. It should operate like a predictable, self-funding
+                growth engine.”
+              </blockquote>
 
-              <div className="flex flex-col gap-4">
-                <Photo
-                  src={MEDIA.storyTwo}
-                  alt="Team strategy discussion"
-                  className="h-[220px] rounded-[24px] sm:h-[290px]"
+              <p className="text-sm leading-relaxed text-[#515b7c] sm:text-base">
+                Brandtisers Media was founded on a simple realization: businesses
+                were tired of agencies bragging about clicks and impressions while the
+                cash register remained silent.
+              </p>
+
+              <p className="mt-4 text-sm leading-relaxed text-[#515b7c] sm:text-base">
+                We stripped away the fluff, the endless middleman meetings, and the
+                glossy slide decks. Instead, we built a lean, high-velocity studio
+                obsessed with consumer psychology, creative craft, and verified sales pipeline.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.18}>
+              <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                {[
+                  { title: "Capital Respect", desc: "Treating client ad spend with fiduciary care." },
+                  { title: "Creative Velocity", desc: "Rapid iterations that out-test market competition." },
+                  { title: "Permanent Equity", desc: "Building assets that keep driving inquiries for years." },
+                ].map((item) => (
+                  <div key={item.title} className="rounded-xl border border-[#e8ddf7] p-4">
+                    <CheckCircle2 size={18} className="text-[#7138F5]" />
+                    <h4 className="mt-2 text-sm font-black text-[#101535]">{item.title}</h4>
+                    <p className="mt-1 text-xs text-[#626B85]">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="lg:col-span-5">
+            <Reveal delay={0.2} className="relative">
+              <div className="relative overflow-hidden rounded-[24px] border border-[#e8ddf7]">
+                <img
+                  src={MEDIA.storyOne}
+                  alt="Brandtisers Media Strategy Discussion"
+                  className="h-[380px] w-full object-cover sm:h-[460px]"
                 />
-
-                <div className="flex h-[145px] flex-col justify-center rounded-[24px] bg-[#7138F5] p-5 text-white sm:h-[185px] sm:p-7">
-                  <Sparkles size={24} />
-
-                  <p className="mt-3 text-xl font-black leading-tight sm:text-2xl">
-                    Ideas.
-                    <br />
-                    Impact.
-                    <br />
-                    Growth.
+                <div className="absolute bottom-4 left-4 right-4 rounded-xl bg-white/95 p-4 shadow-sm backdrop-blur-md">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#7138F5]">
+                    Studio Workshop // Session 48
+                  </p>
+                  <p className="mt-1 text-xs font-black text-[#101535]">
+                    Dissecting customer funnels before spending a single dollar.
                   </p>
                 </div>
               </div>
-            </div>
-          </Reveal>
-
-          <motion.div
-            animate={{
-              y: [0, -9, 0],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute -bottom-2 left-5 rounded-2xl border border-[#EEE5FF] bg-white px-6 py-4 shadow-[0_15px_45px_rgba(30,20,90,0.12)] sm:left-12"
-          >
-            <p className="text-sm font-black text-[#101535]">
-              Creative Minds.
-            </p>
-
-            <p className="mt-1 text-xs font-bold text-[#7138F5]">
-              Digital Growth.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* RIGHT CONTENT */}
-        <div>
-          <Reveal>
-            <SectionTag>Our Story</SectionTag>
-
-            <h2 className="mt-6 text-[35px] font-black leading-[1.12] tracking-[-0.045em] text-[#101535] sm:text-[45px] lg:text-[54px]">
-              Behind Every
-              <br />
-              Great Brand,
-              <br />
-              <span className="text-[#7138F5]">
-                There's a Story.
-              </span>
-            </h2>
-
-            <p className="mt-7 text-sm leading-8 text-[#626B85] sm:text-base">
-              At Brandtisers Media, we believe that successful
-              marketing is not just about being seen. It's about
-              being remembered, trusted and chosen.
-            </p>
-
-            <p className="mt-5 text-sm leading-8 text-[#626B85] sm:text-base">
-              We bring together strategists, designers, marketers
-              and digital thinkers who share one common goal:
-              helping businesses turn their potential into
-              meaningful growth.
-            </p>
-
-            <p className="mt-5 text-sm leading-8 text-[#626B85] sm:text-base">
-              From shaping brand identities to executing
-              performance-focused campaigns, we approach every
-              project with curiosity, commitment and a clear
-              understanding of business objectives.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.15}>
-            <div className="mt-9 space-y-4">
-              {[
-                "Strategy built around your business goals",
-                "Creative ideas designed to connect",
-                "Execution focused on measurable progress",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-3"
-                >
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F0E8FF] text-[#7138F5]">
-                    <Check size={15} strokeWidth={3} />
-                  </div>
-
-                  <span className="text-sm font-semibold text-[#333455]">
-                    {item}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* =========================================
-   MISSION & VISION
-========================================= */
+/* ============================================================
+   4. MISSION & VISION: THE CONTRAST MANIFESTO
+============================================================ */
 
 function MissionVision() {
   return (
-    <section className="relative overflow-hidden bg-[#F8F6FF] px-5 py-24 lg:py-28">
-      <div className="mx-auto max-w-7xl">
-        <SectionTitle
-          tag="Our Purpose"
-          title="What We Believe."
-          accent="What We Build."
-          description="Our purpose is simple: create meaningful work that helps brands move forward."
-          center
-        />
-
-        <div className="grid gap-5 lg:grid-cols-2">
-
-          {/* MISSION */}
-          <Reveal>
-            <motion.div
-              whileHover={{ y: -7 }}
-              className="relative flex min-h-[390px] flex-col overflow-hidden rounded-[32px] bg-[#7138F5] p-9 text-white sm:p-12"
-            >
-              <div className="pointer-events-none absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full border border-white/20" />
-
-              <div className="pointer-events-none absolute -right-10 -top-10 h-[260px] w-[260px] rounded-full border border-white/20" />
-
-              <div className="relative z-10 flex items-start justify-between">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15">
-                  <Target size={32} />
-                </div>
-
-                <span className="text-xs font-bold tracking-widest text-white/60">
-                  01 / PURPOSE
-                </span>
-              </div>
-
-              <div className="relative z-10 mt-auto pt-16">
-                <h3 className="text-3xl font-black sm:text-4xl">
-                  Our Mission
-                </h3>
-
-                <p className="mt-5 max-w-md text-sm leading-8 text-white/85 sm:text-base">
-                  To empower businesses with creative,
-                  strategic and performance-driven digital
-                  solutions that build stronger brands and
-                  support sustainable growth.
-                </p>
-              </div>
-            </motion.div>
+    <section className="relative overflow-hidden bg-[#FAF6FF] py-20 lg:py-28">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+          <Reveal className="rounded-[28px] border border-[#ded5ec] bg-[#101535] p-8 text-white sm:p-12">
+            <SectionEyebrow invert>01 // The Mandate</SectionEyebrow>
+            <h3 className="mt-5 text-2xl font-black tracking-tight text-white sm:text-3xl lg:text-4xl">
+              Kill vanity metrics. Engineer predictable revenue funnels.
+            </h3>
+            <p className="mt-5 text-sm leading-relaxed text-[#D8B4FE]/80 sm:text-base">
+              Our mission is to arm ambitious brands with digital systems so
+              effective, they permanently alter their market positioning. We build
+              campaigns that pay for themselves.
+            </p>
+            <div className="mt-8 flex items-center gap-3 font-mono text-xs text-[#FFD166]">
+              <Sparkles size={14} />
+              <span>Zero-Fluff Fiduciary Standard</span>
+            </div>
           </Reveal>
 
-          {/* VISION */}
-          <Reveal delay={0.1}>
-            <motion.div
-              whileHover={{ y: -7 }}
-              className="relative flex min-h-[390px] flex-col overflow-hidden rounded-[32px] border border-[#E8DEFA] bg-white p-9 sm:p-12"
-            >
-              <div className="pointer-events-none absolute -right-20 -top-20 h-[340px] w-[340px] rounded-full border border-[#7138F5]/10" />
-
-              <div className="pointer-events-none absolute -right-10 -top-10 h-[260px] w-[260px] rounded-full border border-[#7138F5]/10" />
-
-              <div className="relative z-10 flex items-start justify-between">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F0E8FF] text-[#7138F5]">
-                  <Eye size={32} />
-                </div>
-
-                <span className="text-xs font-bold tracking-widest text-[#AAA0BC]">
-                  02 / FUTURE
-                </span>
-              </div>
-
-              <div className="relative z-10 mt-auto pt-16">
-                <h3 className="text-3xl font-black text-[#101535] sm:text-4xl">
-                  Our Vision
-                </h3>
-
-                <p className="mt-5 max-w-md text-sm leading-8 text-[#626B85] sm:text-base">
-                  To become a trusted digital growth partner
-                  for ambitious brands by combining innovation,
-                  creativity and meaningful long-term
-                  partnerships.
-                </p>
-              </div>
-            </motion.div>
+          <Reveal delay={0.1} className="rounded-[28px] border border-[#ded5ec] bg-white p-8 sm:p-12">
+            <SectionEyebrow>02 // The Horizon</SectionEyebrow>
+            <h3 className="mt-5 text-2xl font-black tracking-tight text-[#101535] sm:text-3xl lg:text-4xl">
+              The benchmark agency for ROI-led digital dominance.
+            </h3>
+            <p className="mt-5 text-sm leading-relaxed text-[#626B85] sm:text-base">
+              To be the premier growth partner in National Capital Region and beyond,
+              recognized by the tangible market valuation created for our partners.
+            </p>
+            <div className="mt-8 flex items-center gap-3 font-mono text-xs text-[#7138F5]">
+              <Award size={14} />
+              <span>Independent Growth Standard</span>
+            </div>
           </Reveal>
         </div>
       </div>
@@ -917,126 +776,105 @@ function MissionVision() {
   );
 }
 
-/* =========================================
-   EXPERTISE SECTION
-========================================= */
+/* ============================================================
+   5. EXPERTISE DIRECTORY
+============================================================ */
 
 function Expertise() {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const capabilities = [
+    {
+      category: "Paid Acquisition",
+      title: "Meta & Google Ads Engineering",
+      desc: "Laser-targeted paid search and social campaigns optimized strictly for qualified revenue pipelines.",
+      metrics: "3.8x Avg ROAS",
+      icon: Target,
+      deliverables: ["Full Funnel Retargeting", "Bid Automation", "Creative Variations", "ROAS Scaling"],
+    },
+    {
+      category: "Organic Dominance",
+      title: "Technical SEO & GMB Domination",
+      desc: "Capturing high-intent commercial searches in NCR and nationwide without recurring media spend.",
+      metrics: "Top 3 Rankings",
+      icon: Search,
+      deliverables: ["Technical Audit", "Entity SEO", "Local Map Pack", "Content Architecture"],
+    },
+    {
+      category: "Conversion Infrastructure",
+      title: "High-Velocity Web & Portal Dev",
+      desc: "Ultra-fast headless architectures built for instant lead capture, friction-free UX, and high trust.",
+      metrics: "Sub-Second Load",
+      icon: Code2,
+      deliverables: ["React / Next.js", "Figma Design Systems", "CRO Testing", "Lead Automation"],
+    },
+    {
+      category: "Brand Authority",
+      title: "Creative Storytelling & Production",
+      desc: "Motion graphics, high-impact video reels, and brand positioning designed to make companies memorable.",
+      metrics: "Scroll-Stopping",
+      icon: Camera,
+      deliverables: ["Short-form Video", "Brand Systems", "Motion Assets", "Ad Creatives"],
+    },
+  ];
+
   return (
-    <section className="overflow-hidden bg-white px-5 py-24 lg:py-32">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2 lg:gap-20">
-
-        {/* LEFT CONTENT */}
-        <div>
-          <Reveal>
-            <SectionTag>Our Expertise</SectionTag>
-
-            <h2 className="mt-6 text-[36px] font-black leading-[1.1] tracking-[-0.045em] text-[#101535] sm:text-[46px] lg:text-[54px]">
-              Different Skills.
-              <br />
-              One Powerful
-              <br />
-              <span className="text-[#7138F5]">
-                Team.
-              </span>
-            </h2>
-
-            <p className="mt-6 max-w-lg text-sm leading-8 text-[#626B85] sm:text-base">
-              Great marketing happens when creative thinking
-              and strategic execution work together.
-              Our multidisciplinary approach connects
-              every part of your digital presence.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="mt-8 grid grid-cols-2 gap-3">
-              {SERVICES.map(({ name, icon: Icon }) => (
-                <motion.div
-                  key={name}
-                  whileHover={{
-                    x: 5,
-                    backgroundColor: "#F2ECFF",
-                  }}
-                  className="flex items-center gap-3 rounded-2xl border border-[#EDE6FA] bg-[#FAF9FF] px-4 py-4"
-                >
-                  <Icon
-                    size={18}
-                    className="shrink-0 text-[#7138F5]"
-                  />
-
-                  <span className="text-xs font-bold text-[#101535] sm:text-sm">
-                    {name}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <div className="mt-9">
-              <GradientButton href="/services">
-                Explore Our Services
-              </GradientButton>
-            </div>
-          </Reveal>
+    <section className="relative overflow-hidden bg-white py-24 lg:py-32">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <SectionEyebrow>Studio Disciplines</SectionEyebrow>
+          <h2 className="mt-4 text-3xl font-black tracking-tight text-[#101535] sm:text-4xl lg:text-5xl">
+            Integrated disciplines. One compounding growth apparatus.
+          </h2>
         </div>
 
-        {/* RIGHT VISUAL */}
-        <Reveal>
-          <div className="relative">
-            <Photo
-              src={MEDIA.studio}
-              alt="Creative team working on a digital project"
-              className="h-[420px] rounded-[32px] sm:h-[570px]"
-            />
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {capabilities.map((cap, i) => {
+            const Icon = cap.icon;
+            return (
+              <Reveal
+                key={cap.title}
+                delay={i * 0.08}
+                className="group flex flex-col justify-between rounded-[24px] border border-[#e8ddf7] bg-[#FAF6FF] p-6 transition-all duration-300 hover:border-[#7138F5] hover:bg-white hover:shadow-lg"
+              >
+                <div>
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#7138F5] shadow-xs group-hover:bg-[#7138F5] group-hover:text-white transition-colors">
+                    <Icon size={20} />
+                  </div>
+                  <p className="mt-5 font-mono text-[10px] font-bold uppercase tracking-wider text-[#7c86a2]">
+                    {cap.category}
+                  </p>
+                  <h3 className="mt-1 text-lg font-black text-[#101535]">
+                    {cap.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[#626B85]">
+                    {cap.desc}
+                  </p>
 
-            <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-[#101535]/55 via-transparent to-transparent" />
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {cap.deliverables.map((d) => (
+                      <span key={d} className="rounded-md bg-white border border-[#e8ddf7] px-2 py-0.5 text-[10px] font-semibold text-[#101535]">
+                        {d}
+                      </span>
+                    ))}
+                  </div>
+                </div>
 
-            <div className="absolute bottom-8 left-8 right-8">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-xs font-black text-[#7138F5] backdrop-blur">
-                <Sparkles size={14} />
-                Built for Digital Growth
-              </span>
-
-              <p className="mt-4 max-w-sm text-2xl font-black leading-tight text-white sm:text-3xl">
-                Where strategy meets imagination.
-              </p>
-            </div>
-
-            <motion.div
-              animate={{
-                y: [0, -10, 0],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute -right-3 top-8 flex h-20 w-20 items-center justify-center rounded-[24px] border-4 border-white bg-[#F6B943] text-white shadow-xl sm:-right-8 sm:h-24 sm:w-24"
-            >
-              <Lightbulb size={37} />
-            </motion.div>
-          </div>
-        </Reveal>
+                <div className="mt-8 border-t border-[#ded5ec] pt-4 font-mono text-xs font-black text-[#7138F5]">
+                  {cap.metrics}
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
 
-/* =========================================
-   PROCESS TIMELINE
-========================================= */
-
-
-/* =========================================
-   PROCESS TIMELINE - ANIMATED LADDER
-========================================= */
-
-
-/* =========================================
-   PROCESS TIMELINE - ANIMATED GROWTH GRAPH
-========================================= */
+/* ============================================================
+   6. PROCESS TIMELINE (100% INTACT AS REQUESTED - IMAGE 1)
+============================================================ */
 
 function ProcessTimeline() {
   const reduce = useReducedMotion();
@@ -1068,25 +906,26 @@ function ProcessTimeline() {
       ref={sectionRef}
       className="relative overflow-hidden bg-[#F8F6FF] px-5 py-24 lg:py-32"
     >
-      {/* Background */}
       <div className="pointer-events-none absolute -left-48 top-20 h-[500px] w-[500px] rounded-full bg-[#7138F5]/[0.05] blur-[110px]" />
-
       <div className="pointer-events-none absolute -right-48 bottom-0 h-[500px] w-[500px] rounded-full bg-[#B995FF]/[0.09] blur-[110px]" />
 
       <div className="relative mx-auto max-w-7xl">
-        <SectionTitle
-          tag="Our Approach"
-          title="From First Idea"
-          accent="To Real Impact."
-          description="A clear, collaborative process that transforms business goals into thoughtful digital execution."
-          center
-        />
+        <div className="mb-12 text-center lg:mb-16">
+          <SectionEyebrow>Our Approach</SectionEyebrow>
+          <h2 className="mt-4 text-[34px] font-black leading-[1.12] tracking-[-0.045em] text-[#101535] sm:text-[44px] lg:text-[54px]">
+            From First Idea{" "}
+            <span className="bg-gradient-to-r from-[#7138F5] via-[#965BFF] to-[#C184FF] bg-clip-text text-transparent">
+              To Real Impact.
+            </span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-8 text-[#626B85] sm:text-base">
+            A clear, collaborative process that transforms business goals into thoughtful digital execution.
+          </p>
+        </div>
 
         {/* DESKTOP GRAPH */}
         <div className="relative hidden lg:block">
           <div className="relative h-[660px] overflow-hidden rounded-[36px] border border-[#E9E1FA] bg-white/70 shadow-[0_25px_80px_rgba(45,25,100,0.04)]">
-
-            {/* Grid background */}
             <div
               className="pointer-events-none absolute inset-0 opacity-50"
               style={{
@@ -1098,18 +937,15 @@ function ProcessTimeline() {
               }}
             />
 
-            {/* Graph title */}
             <div className="absolute left-10 top-9 z-10">
               <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#7138F5]">
                 Our Working Process
               </p>
-
               <h3 className="mt-2 text-xl font-black text-[#101535]">
                 A connected journey from strategy to scale.
               </h3>
             </div>
 
-            {/* Graph SVG */}
             <svg
               viewBox="0 0 1070 500"
               preserveAspectRatio="none"
@@ -1136,16 +972,8 @@ function ProcessTimeline() {
                   x2="0"
                   y2="1"
                 >
-                  <stop
-                    offset="0%"
-                    stopColor="#7138F5"
-                    stopOpacity="0.18"
-                  />
-                  <stop
-                    offset="100%"
-                    stopColor="#7138F5"
-                    stopOpacity="0"
-                  />
+                  <stop offset="0%" stopColor="#7138F5" stopOpacity="0.18" />
+                  <stop offset="100%" stopColor="#7138F5" stopOpacity="0" />
                 </linearGradient>
 
                 <filter
@@ -1159,7 +987,6 @@ function ProcessTimeline() {
                 </filter>
               </defs>
 
-              {/* Horizontal guides */}
               {[100, 200, 300, 400].map((y) => (
                 <line
                   key={y}
@@ -1173,13 +1000,11 @@ function ProcessTimeline() {
                 />
               ))}
 
-              {/* Area under curve */}
               <path
                 d={`${graphPath} L 970 460 L 100 460 Z`}
                 fill="url(#processAreaGradient)"
               />
 
-              {/* Background curve */}
               <path
                 d={graphPath}
                 fill="none"
@@ -1188,7 +1013,6 @@ function ProcessTimeline() {
                 strokeLinecap="round"
               />
 
-              {/* Animated glow */}
               <motion.path
                 d={graphPath}
                 fill="none"
@@ -1197,24 +1021,18 @@ function ProcessTimeline() {
                 strokeLinecap="round"
                 opacity="0.18"
                 filter="url(#processGlow)"
-                style={{
-                  pathLength: reduce ? 1 : smoothProgress,
-                }}
+                style={{ pathLength: reduce ? 1 : smoothProgress }}
               />
 
-              {/* Animated growth curve */}
               <motion.path
                 d={graphPath}
                 fill="none"
                 stroke="url(#processLineGradient)"
                 strokeWidth="5"
                 strokeLinecap="round"
-                style={{
-                  pathLength: reduce ? 1 : smoothProgress,
-                }}
+                style={{ pathLength: reduce ? 1 : smoothProgress }}
               />
 
-              {/* Graph milestone nodes */}
               {desktopPoints.map((point, i) => (
                 <g key={i}>
                   <line
@@ -1226,33 +1044,18 @@ function ProcessTimeline() {
                     strokeWidth="1.5"
                     strokeDasharray="5 7"
                   />
-
                   <motion.circle
                     cx={point.x}
                     cy={point.y}
                     r="19"
                     fill="#7138F5"
                     fillOpacity="0.12"
-                    initial={
-                      reduce
-                        ? false
-                        : { opacity: 0, scale: 0 }
-                    }
-                    whileInView={{
-                      opacity: 1,
-                      scale: 1,
-                    }}
+                    initial={reduce ? false : { opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{
-                      duration: 0.5,
-                      delay: i * 0.25,
-                    }}
-                    style={{
-                      transformBox: "fill-box",
-                      transformOrigin: "center",
-                    }}
+                    transition={{ duration: 0.5, delay: i * 0.25 }}
+                    style={{ transformBox: "fill-box", transformOrigin: "center" }}
                   />
-
                   <motion.circle
                     cx={point.x}
                     cy={point.y}
@@ -1260,24 +1063,11 @@ function ProcessTimeline() {
                     fill="#7138F5"
                     stroke="white"
                     strokeWidth="4"
-                    initial={
-                      reduce
-                        ? false
-                        : { opacity: 0, scale: 0 }
-                    }
-                    whileInView={{
-                      opacity: 1,
-                      scale: 1,
-                    }}
+                    initial={reduce ? false : { opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{
-                      duration: 0.5,
-                      delay: i * 0.25,
-                    }}
-                    style={{
-                      transformBox: "fill-box",
-                      transformOrigin: "center",
-                    }}
+                    transition={{ duration: 0.5, delay: i * 0.25 }}
+                    style={{ transformBox: "fill-box", transformOrigin: "center" }}
                   />
                 </g>
               ))}
@@ -1287,58 +1077,27 @@ function ProcessTimeline() {
             <div className="pointer-events-none absolute inset-0 z-20">
               {PROCESS.map((step, i) => {
                 const Icon = step.icon;
-
                 const positions = [
-                  {
-                    left: "5%",
-                    top: "53%",
-                  },
-                  {
-                    left: "30%",
-                    top: "37%",
-                  },
-                  {
-                    left: "55%",
-                    top: "21%",
-                  },
-                  {
-                    left: "78%",
-                    top: "10%",
-                  },
+                  { left: "5%", top: "53%" },
+                  { left: "30%", top: "37%" },
+                  { left: "55%", top: "21%" },
+                  { left: "78%", top: "10%" },
                 ];
 
                 return (
                   <motion.div
                     key={step.number}
-                    initial={
-                      reduce
-                        ? false
-                        : {
-                            opacity: 0,
-                            y: 35,
-                          }
-                    }
-                    whileInView={{
-                      opacity: 1,
-                      y: 0,
-                    }}
+                    initial={reduce ? false : { opacity: 0, y: 35 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{
-                      duration: 0.7,
-                      delay: i * 0.18,
-                      ease: EASE,
-                    }}
-                    style={{
-                      left: positions[i].left,
-                      top: positions[i].top,
-                    }}
+                    transition={{ duration: 0.7, delay: i * 0.18, ease: EASE }}
+                    style={{ left: positions[i].left, top: positions[i].top }}
                     className="pointer-events-auto absolute w-[210px] rounded-[22px] border border-[#E9E1FA] bg-white/95 p-5 shadow-[0_15px_45px_rgba(50,25,120,0.09)] backdrop-blur-xl xl:w-[230px]"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#F0E8FF] text-[#7138F5]">
                         <Icon size={22} />
                       </div>
-
                       <span className="text-[11px] font-black tracking-widest text-[#B49AD9]">
                         {step.number}
                       </span>
@@ -1347,7 +1106,6 @@ function ProcessTimeline() {
                     <h3 className="mt-4 text-lg font-black text-[#101535]">
                       {step.title}
                     </h3>
-
                     <p className="mt-2 text-xs leading-6 text-[#626B85]">
                       {step.description}
                     </p>
@@ -1356,90 +1114,52 @@ function ProcessTimeline() {
               })}
             </div>
 
-            {/* Bottom labels */}
             <div className="absolute bottom-7 left-[8%] right-[8%] flex justify-between">
-              <span className="text-xs font-bold text-[#8B7DA8]">
-                Understanding
-              </span>
-
-              <span className="text-xs font-bold text-[#8B7DA8]">
-                Planning
-              </span>
-
-              <span className="text-xs font-bold text-[#8B7DA8]">
-                Execution
-              </span>
-
-              <span className="text-xs font-bold text-[#7138F5]">
-                Optimization
-              </span>
+              <span className="text-xs font-bold text-[#8B7DA8]">Understanding</span>
+              <span className="text-xs font-bold text-[#8B7DA8]">Planning</span>
+              <span className="text-xs font-bold text-[#8B7DA8]">Execution</span>
+              <span className="text-xs font-bold text-[#7138F5]">Optimization</span>
             </div>
           </div>
         </div>
 
-        {/* MOBILE & TABLET JOURNEY */}
+        {/* MOBILE JOURNEY */}
         <div className="relative mx-auto max-w-2xl lg:hidden">
           <div className="absolute bottom-10 left-[24px] top-8 w-[3px] rounded-full bg-[#E5D9FF]" />
-
           <motion.div
             className="absolute left-[24px] top-8 w-[3px] origin-top rounded-full bg-[#7138F5]"
-            style={{
-              height: "calc(100% - 72px)",
-              scaleY: reduce ? 1 : smoothProgress,
-            }}
+            style={{ height: "calc(100% - 72px)", scaleY: reduce ? 1 : smoothProgress }}
           />
-
           <div className="space-y-7">
             {PROCESS.map((step, i) => {
               const Icon = step.icon;
-
               return (
                 <motion.div
                   key={step.number}
-                  initial={
-                    reduce
-                      ? false
-                      : {
-                          opacity: 0,
-                          x: 35,
-                        }
-                  }
-                  whileInView={{
-                    opacity: 1,
-                    x: 0,
-                  }}
+                  initial={reduce ? false : { opacity: 0, x: 35 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{
-                    duration: 0.65,
-                    delay: i * 0.1,
-                    ease: EASE,
-                  }}
+                  transition={{ duration: 0.65, delay: i * 0.1, ease: EASE }}
                   className="relative pl-[65px]"
                 >
-                  {/* Timeline node */}
                   <div className="absolute left-[10px] top-8 z-10 flex h-[31px] w-[31px] items-center justify-center rounded-full border-[5px] border-[#F8F6FF] bg-[#7138F5] shadow-[0_0_0_2px_#DAC8FF]">
                     <span className="h-[7px] w-[7px] rounded-full bg-white" />
                   </div>
-
                   <div className="relative overflow-hidden rounded-[24px] border border-[#E9E1FA] bg-white p-6 shadow-[0_12px_35px_rgba(50,25,120,0.06)]">
                     <div className="flex items-center justify-between">
                       <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F0E8FF] text-[#7138F5]">
                         <Icon size={24} />
                       </div>
-
                       <span className="text-xs font-black uppercase tracking-widest text-[#7138F5]">
                         Step {step.number}
                       </span>
                     </div>
-
                     <h3 className="mt-5 text-xl font-black text-[#101535]">
                       {step.title}
                     </h3>
-
                     <p className="mt-3 text-sm leading-7 text-[#626B85]">
                       {step.description}
                     </p>
-
                     <div className="mt-5 h-[3px] w-12 rounded-full bg-[#7138F5]/40" />
                   </div>
                 </motion.div>
@@ -1452,93 +1172,72 @@ function ProcessTimeline() {
   );
 }
 
-
-
-/* =========================================
-   PHOTO GALLERY
-========================================= */
+/* ============================================================
+   7. ART-DIRECTED GALLERY ARCHIVE
+============================================================ */
 
 function CreativeGallery() {
   return (
     <section className="overflow-hidden bg-white py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-5">
-        <SectionTitle
-          tag="The Creative Side"
-          title="The People."
-          accent="The Process. The Passion."
-          description="A glimpse into the kind of collaboration, energy and thinking that drives great digital work."
-          center
-        />
-      </div>
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-6 border-b border-[#e8ddf7] pb-8">
+          <div>
+            <SectionEyebrow>Studio Culture & Action</SectionEyebrow>
+            <h2 className="mt-4 text-3xl font-black tracking-tight text-[#101535] sm:text-4xl lg:text-5xl">
+              Where strategic obsession takes physical form.
+            </h2>
+          </div>
+          <p className="max-w-md text-xs leading-relaxed text-[#626B85] sm:text-sm">
+            Behind the high-converting ad units and rankings are real strategists,
+            copywriters, and engineers pushing boundaries every sprint.
+          </p>
+        </div>
 
-      <div className="mx-auto grid max-w-[1600px] grid-cols-2 gap-3 px-4 sm:gap-4 sm:px-6 lg:grid-cols-12">
-        {GALLERY.map((item, i) => (
-          <Reveal
-            key={item.label}
-            delay={i * 0.07}
-            className={
-              i === 0
-                ? "col-span-2 lg:col-span-5"
-                : i === 1
-                ? "lg:col-span-3"
-                : i === 2
-                ? "lg:col-span-4"
-                : i === 3
-                ? "lg:col-span-7"
-                : "col-span-2 lg:col-span-5"
-            }
-          >
-            <div className="group relative h-[240px] overflow-hidden rounded-[24px] bg-[#EEE8F8] sm:h-[330px] lg:h-[360px]">
-              <img
-                src={item.src}
-                alt={item.label}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.09]"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-[#101535]/75 via-transparent to-transparent opacity-80 transition-opacity group-hover:opacity-100" />
-
-              <div className="absolute bottom-6 left-6 right-6 translate-y-2 transition-transform duration-500 group-hover:translate-y-0">
-                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/75">
-                  {item.category}
-                </p>
-
-                <h3 className="mt-2 text-lg font-black text-white sm:text-2xl">
-                  {item.label}
-                </h3>
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+          {GALLERY.map((item, i) => (
+            <Reveal
+              key={item.label}
+              delay={i * 0.05}
+              className={
+                i === 0
+                  ? "sm:col-span-2 lg:col-span-7"
+                  : i === 1
+                  ? "lg:col-span-5"
+                  : i === 2
+                  ? "lg:col-span-4"
+                  : i === 3
+                  ? "lg:col-span-4"
+                  : "sm:col-span-2 lg:col-span-4"
+              }
+            >
+              <div className="group relative h-[260px] overflow-hidden rounded-[24px] border border-[#e8ddf7] bg-[#FAF6FF] sm:h-[340px]">
+                <img
+                  src={item.src}
+                  alt={item.label}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#101535]/85 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-90" />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#FFD166]">
+                    {item.category}
+                  </p>
+                  <h3 className="mt-1 text-base font-black text-white sm:text-xl">
+                    {item.label}
+                  </h3>
+                </div>
               </div>
-
-              <div className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white opacity-0 backdrop-blur transition-all duration-300 group-hover:opacity-100">
-                <ArrowUpRight size={19} />
-              </div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-
-      <div className="mx-auto mt-10 max-w-7xl px-5 text-center">
-        <p className="text-sm font-medium text-[#626B85]">
-          Creative thinking. Meaningful collaboration.
-          Work that moves brands forward.
-        </p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-/* =========================================
-   CORE VALUES
-========================================= */
-
-
-/* =========================================
-   ANIMATED CORE VALUES
-========================================= */
-
-
-/* =========================================
-   CORE VALUES - ANIMATED GROWTH STAIRCASE
-========================================= */
+/* ============================================================
+   8. CORE VALUES STAIRCASE (100% INTACT AS REQUESTED - IMAGE 2)
+============================================================ */
 
 function CoreValues() {
   const reduce = useReducedMotion();
@@ -1546,21 +1245,24 @@ function CoreValues() {
   return (
     <section className="relative overflow-hidden bg-[#F8F6FF] px-5 py-24 lg:py-32">
       <div className="pointer-events-none absolute -left-40 top-20 h-[450px] w-[450px] rounded-full bg-[#7138F5]/[0.06] blur-[110px]" />
-
       <div className="pointer-events-none absolute -right-40 bottom-0 h-[450px] w-[450px] rounded-full bg-[#B995FF]/[0.09] blur-[110px]" />
 
       <div className="relative mx-auto max-w-7xl">
-        <SectionTitle
-          tag="Our Core Values"
-          title="The Thinking Behind"
-          accent="Everything We Do."
-          description="Six principles that shape how we create, collaborate and deliver."
-          center
-        />
+        <div className="mb-12 text-center lg:mb-16">
+          <SectionEyebrow>Our Core Values</SectionEyebrow>
+          <h2 className="mt-4 text-[34px] font-black leading-[1.12] tracking-[-0.045em] text-[#101535] sm:text-[44px] lg:text-[54px]">
+            The Thinking Behind{" "}
+            <span className="bg-gradient-to-r from-[#7138F5] via-[#965BFF] to-[#C184FF] bg-clip-text text-transparent">
+              Everything We Do.
+            </span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-8 text-[#626B85] sm:text-base">
+            Six principles that shape how we create, collaborate and deliver.
+          </p>
+        </div>
 
         {/* STAIRCASE */}
         <div className="relative mx-auto max-w-6xl pt-6 lg:pt-16">
-          {/* Desktop rising staircase connector */}
           <svg
             className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
             viewBox="0 0 1200 850"
@@ -1580,14 +1282,12 @@ function CoreValues() {
             />
           </svg>
 
-          {/* Mobile vertical connector */}
           <div className="pointer-events-none absolute bottom-10 left-[27px] top-10 w-[2px] bg-gradient-to-b from-[#7138F5] via-[#B99AFF] to-[#E4D8FF] lg:hidden" />
 
           <div className="relative grid gap-5 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-8">
             {VALUES.map((value, i) => {
               const Icon = value.icon;
 
-              // Staircase: first step at bottom, last step at top.
               const desktopOffsets = [
                 "lg:translate-y-[170px]",
                 "lg:translate-y-[85px]",
@@ -1600,52 +1300,22 @@ function CoreValues() {
               return (
                 <motion.div
                   key={value.title}
-                  initial={
-                    reduce
-                      ? false
-                      : {
-                          opacity: 0,
-                          y: 70,
-                          scale: 0.9,
-                        }
-                  }
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                  }}
+                  initial={reduce ? false : { opacity: 0, y: 70, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{
-                    duration: 0.7,
-                    delay: i * 0.12,
-                    ease: EASE,
-                  }}
+                  transition={{ duration: 0.7, delay: i * 0.12, ease: EASE }}
                   className={`relative pl-14 lg:pl-0 ${desktopOffsets[i]}`}
                 >
-                  {/* Mobile timeline node */}
                   <div
                     className="absolute left-[15px] top-8 z-20 flex h-[26px] w-[26px] items-center justify-center rounded-full border-[5px] border-[#F8F6FF] shadow-sm lg:hidden"
                     style={{ backgroundColor: value.color }}
                   />
 
-                  {/* Step card */}
                   <motion.div
-                    whileHover={
-                      reduce
-                        ? {}
-                        : {
-                            y: -12,
-                            scale: 1.025,
-                          }
-                    }
-                    transition={{
-                      type: "spring",
-                      stiffness: 260,
-                      damping: 20,
-                    }}
+                    whileHover={reduce ? {} : { y: -12, scale: 1.025 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
                     className="group relative flex h-full min-h-[260px] flex-col overflow-hidden rounded-[26px] border border-[#E8DEFA] bg-white p-6 shadow-[0_14px_40px_rgba(45,20,100,0.07)] sm:p-7"
                   >
-                    {/* Large transparent step number */}
                     <span
                       className="pointer-events-none absolute -right-3 -top-7 select-none text-[125px] font-black leading-none opacity-[0.07]"
                       style={{ color: value.color }}
@@ -1653,51 +1323,33 @@ function CoreValues() {
                       {value.number}
                     </span>
 
-                    {/* Top row */}
                     <div className="relative z-10 flex items-start justify-between">
                       <motion.div
-                        animate={
-                          reduce
-                            ? {}
-                            : { y: [0, -5, 0] }
-                        }
-                        transition={{
-                          duration: 4 + i * 0.3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
+                        animate={reduce ? {} : { y: [0, -5, 0] }}
+                        transition={{ duration: 4 + i * 0.3, repeat: Infinity, ease: "easeInOut" }}
                         className="flex h-14 w-14 items-center justify-center rounded-2xl"
-                        style={{
-                          backgroundColor: value.bg,
-                          color: value.color,
-                        }}
+                        style={{ backgroundColor: value.bg, color: value.color }}
                       >
                         <Icon size={27} strokeWidth={2} />
                       </motion.div>
 
                       <span
                         className="rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.13em]"
-                        style={{
-                          backgroundColor: value.bg,
-                          color: value.color,
-                        }}
+                        style={{ backgroundColor: value.bg, color: value.color }}
                       >
                         Step {value.number}
                       </span>
                     </div>
 
-                    {/* Card text */}
                     <div className="relative z-10 mt-auto pt-10">
                       <h3 className="text-xl font-black tracking-[-0.025em] text-[#101535]">
                         {value.title}
                       </h3>
-
                       <p className="mt-3 text-sm leading-7 text-[#626B85]">
                         {value.text}
                       </p>
                     </div>
 
-                    {/* Bottom accent */}
                     <div
                       className="absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
                       style={{ backgroundColor: value.color }}
@@ -1708,7 +1360,6 @@ function CoreValues() {
             })}
           </div>
 
-          {/* Spacer for desktop offsets */}
           <div className="hidden h-[170px] lg:block" />
         </div>
       </div>
@@ -1716,173 +1367,66 @@ function CoreValues() {
   );
 }
 
-/* =========================================
-   FINAL CTA - PREMIUM SPLIT LAYOUT
-========================================= */
+/* ============================================================
+   9. FINAL EXECUTIVE CLOSER
+============================================================ */
 
 function AboutCTA() {
-  const reduce = useReducedMotion();
-
   return (
-    <section className="relative overflow-hidden bg-white px-5 py-20 sm:py-24 lg:py-28">
-      <div className="mx-auto max-w-7xl">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-[30px] border border-[#E9E1F8] bg-[#F8F6FF] shadow-[0_25px_80px_rgba(50,25,110,0.06)] sm:rounded-[36px]">
-            <div className="grid items-stretch lg:grid-cols-[1.08fr_0.92fr]">
+    <section className="relative overflow-hidden bg-white py-20 lg:py-28">
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[32px] border border-[#e8ddf7] bg-[#101535] p-8 sm:p-14 lg:p-20 text-white">
+          <div className="pointer-events-none absolute -right-36 -top-36 h-[400px] w-[400px] rounded-full bg-[#7138F5]/30 blur-[130px]" />
 
-              {/* LEFT CONTENT */}
-              <div className="relative z-10 flex flex-col justify-center px-7 py-14 sm:px-12 sm:py-20 lg:px-16 lg:py-24">
-                <motion.div
-                  initial={
-                    reduce
-                      ? false
-                      : { opacity: 0, y: 20 }
-                  }
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.7,
-                    ease: EASE,
-                  }}
-                >
-                  <SectionTag>
-                    Let's Work Together
-                  </SectionTag>
+          <div className="relative z-10 max-w-3xl">
+            <SectionEyebrow invert>Partner With Us</SectionEyebrow>
+            <h2 className="mt-5 text-3xl font-black leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Ready to stop bleeding ad spend and start dominating?
+            </h2>
+            <p className="mt-6 max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
+              Book a direct strategy consultation with our senior growth architects.
+              No junior sales pitches. We review your current funnel and present
+              verifiable opportunities to scale.
+            </p>
 
-                  <h2 className="mt-7 max-w-xl text-[38px] font-black leading-[1.12] tracking-[-0.045em] text-[#101535] sm:text-[50px] lg:text-[56px]">
-                    Have a Vision?
-                    <br />
-
-                    <span className="bg-gradient-to-r from-[#7138F5] via-[#955BFF] to-[#C084FC] bg-clip-text text-transparent">
-                      Let's Make
-                      <br />
-                      It Happen.
-                    </span>
-                  </h2>
-
-                  <p className="mt-6 max-w-md text-sm leading-8 text-[#626B85] sm:text-base">
-                    Whether you're building a new brand or
-                    taking your business to the next level,
-                    we're here to bring the right ideas,
-                    people and expertise together.
-                  </p>
-
-                  <div className="mt-9 flex flex-wrap items-center gap-4">
-                    <GradientButton href="/contact">
-                      Start a Conversation
-                    </GradientButton>
-
-                    <a
-                      href="tel:7701910068"
-                      className="group inline-flex items-center gap-2 text-sm font-bold text-[#101535] transition-colors hover:text-[#7138F5]"
-                    >
-                      Call +91 7701910068
-
-                      <ArrowUpRight
-                        size={17}
-                        className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                      />
-                    </a>
-                  </div>
-                </motion.div>
-
-                {/* PARTNERSHIP NOTE */}
-                <div className="mt-12 flex items-center gap-3 border-t border-[#E4DAF4] pt-6">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EAE0FF] text-[#7138F5]">
-                    <HeartHandshake size={20} />
-                  </div>
-
-                  <p className="text-xs font-semibold leading-6 text-[#626B85] sm:text-sm">
-                    Great partnerships begin with
-                    <span className="font-black text-[#101535]">
-                      {" "}a simple conversation.
-                    </span>
-                  </p>
-                </div>
-              </div>
-
-              {/* RIGHT IMAGE */}
-              <div className="relative min-h-[340px] overflow-hidden sm:min-h-[460px] lg:min-h-[580px]">
-                <motion.img
-                  src={MEDIA.heroMain}
-                  alt="Creative professionals collaborating on a project"
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover"
-                  initial={
-                    reduce
-                      ? false
-                      : { scale: 1.12 }
-                  }
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 1.3,
-                    ease: EASE,
-                  }}
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <a
+                href="/contact"
+                className="group inline-flex items-center gap-2 rounded-full bg-[#7138F5] px-7 py-4 text-xs font-black uppercase tracking-wider text-white shadow-lg transition hover:bg-[#5f22e6] sm:text-sm"
+              >
+                <span>Initiate Executive Audit</span>
+                <ArrowUpRight
+                  size={16}
+                  className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
+              </a>
 
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#101535]/65 via-[#101535]/10 to-transparent" />
+              <a
+                href="tel:7701910068"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-4 text-xs font-bold text-white transition hover:bg-white/10 sm:text-sm"
+              >
+                <span>Direct Line: +91 7701910068</span>
+              </a>
+            </div>
 
-                {/* IMAGE CAPTION */}
-                <motion.div
-                  initial={
-                    reduce
-                      ? false
-                      : { opacity: 0, y: 30 }
-                  }
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.8,
-                    delay: 0.2,
-                    ease: EASE,
-                  }}
-                  className="absolute bottom-8 left-7 right-7 sm:bottom-10 sm:left-10"
-                >
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/15 text-white backdrop-blur-md">
-                    <Sparkles size={23} />
-                  </div>
-
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">
-                    Brandtisers Media
-                  </p>
-
-                  <h3 className="mt-2 max-w-sm text-2xl font-black leading-tight text-white sm:text-3xl">
-                    Good Ideas.
-                    <br />
-                    Great People.
-                    <br />
-                    Better Together.
-                  </h3>
-                </motion.div>
-
-                {/* FLOATING ACCENT */}
-                <motion.div
-                  animate={
-                    reduce
-                      ? {}
-                      : {
-                          y: [0, -9, 0],
-                          rotate: [0, 4, 0],
-                        }
-                  }
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute right-6 top-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/40 bg-white/90 text-[#7138F5] shadow-lg backdrop-blur sm:right-9 sm:top-9"
-                >
-                  <ArrowUpRight size={27} />
-                </motion.div>
-              </div>
-
+            <div className="mt-12 flex flex-wrap items-center gap-6 border-t border-white/10 pt-6 font-mono text-xs text-white/60">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={14} className="text-[#00e5bd]" />
+                Zero Obligation Audit
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={14} className="text-[#00e5bd]" />
+                14-Day Delivery Sprints
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={14} className="text-[#00e5bd]" />
+                Direct Partner Attention
+              </span>
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -1896,21 +1440,13 @@ export default function AboutUs() {
   return (
     <main className="overflow-hidden bg-white text-[#101535]">
       <AboutHero />
-
       <CreativeMarquee />
-
       <OurStory />
-
       <MissionVision />
-
       <Expertise />
-
       <ProcessTimeline />
-
       <CreativeGallery />
-
       <CoreValues />
-
       <AboutCTA />
     </main>
   );
